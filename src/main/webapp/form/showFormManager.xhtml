@@ -1,0 +1,28 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{showFormManagerPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="../templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        
+        <h:form id="formsListForm">
+            
+            <h:outputText value="Wnioski pracowników"/><br/>            
+            <ui:include src="_templateShowForms.xhtml" />
+            
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

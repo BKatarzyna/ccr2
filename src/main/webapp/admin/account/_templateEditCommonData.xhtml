@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:outputLabel value="#{msg['account.name']}" for="name" />
+    <p:inputText id="name" value="#{pageBean.accountToEdit.name}" title="#{msg['account.name']}" required="true" />
+    <p:messages for="name" />
+
+    <p:outputLabel value="#{msg['account.surname']}" for="surname" />
+    <p:inputText id="surname" value="#{pageBean.accountToEdit.surname}" title="#{msg['account.surname']}" required="true" />
+    <p:messages for="surname" />
+
+    <p:outputLabel value="#{msg['account.email']}" for="email" />
+    <p:inputText id="email" value="#{pageBean.accountToEdit.email}" title="#{msg['account.email']}" required="true" />
+    <p:messages for="email" />
+
+    <p:outputLabel value="#{msg['account.phone']}" for="phone" />
+    <p:inputText id="phone" value="#{pageBean.accountToEdit.phone}" title="#{msg['account.phone']}" required="false" />
+    <p:messages for="phone" />
+
+</ui:composition>

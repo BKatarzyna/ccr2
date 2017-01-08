@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{locationListPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="accountListForm">       
+            <p:outputLabel value="Lista lokalizacji"/><br/>
+            <p:dataTable id="findLocation" var="row" widgetVar="filterAccounts" value="#{pageBean.allLocations}"  rowKey="#{row.id}"
+                         emptyMessage="#{msg['list.empty']}" filteredValue="#{pageBean.filteredLocations}"
+                         selectionMode="single" selection="#{pageBean.location}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,50">
+                <f:facet name="header">
+                    <p:outputPanel>                
+                        <h:outputText value="Wyszukaj:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('filterAccounts').filter()" style="width:200px" placeholder="Czego szukasz?"/>
+
+                    </p:outputPanel><br/>
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{pageBean.onRowSelect}"/> 
+                <p:column filterBy="#{row.shortName}" headerText="#{msg['location.shortName']}" filterStyle="display:none" >
+                    <h:outputText value="#{row.shortName}" />
+                </p:column>
+                <p:column filterBy="#{row.city}" headerText="#{msg['location.city']}" filterStyle="display:none">
+                    <h:outputText value="#{row.city}" />
+                </p:column>
+                <p:column filterBy="#{row.street}" headerText="#{msg['location.street']}" filterStyle="display:none">
+                    <h:outputText value="#{row.street}" />
+                </p:column>
+                
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

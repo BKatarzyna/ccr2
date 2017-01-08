@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:param name="pageBean" value="#{selectCarPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="selectCar">
+
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    <o:graphicImage rendered="#{not empty carToSelect.carImage}" value="#{carToSelect.carImage.image}" dataURI="true" height="150px" width="200px"/>
+                    <o:graphicImage rendered="#{empty carToSelect.carImage}" name="no_foto.png" dataURI="true" height="150px" width="150px"/>
+                </f:facet>
+
+                <h:outputText value="#{msg['car.model']}" />
+                <h:outputText value="#{pageBean.carToSelect.model}" />
+                <h:outputText value="#{msg['car.registrationNumber']}" />
+                <h:outputText value="#{pageBean.carToSelect.registrationNumber}" />
+                <h:outputText value="#{msg['car.numberOfSeats']}" />
+                <h:outputText value="#{pageBean.carToSelect.numberOfSeats}" />
+                <h:outputText value="#{msg['location']}" />
+                <h:outputText value="#{pageBean.carToSelect.locationId.shortName}" />
+                <h:outputText value="#{msg['car.driver']}" />
+                <p:selectOneMenu id="driver" value="#{pageBean.driverName}">
+                    <f:selectItem itemLabel="#{msg['action.choose']}" itemValue=""/>
+                    <f:selectItems value="#{pageBean.drivers}" var="carDriver" itemLabel="#{carDriver.name += ' ' += carDriver.surname}"/>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <br/>
+            <p:commandButton action="#{pageBean.carSelected}" value="#{msg['car.book']}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+
+
+
+

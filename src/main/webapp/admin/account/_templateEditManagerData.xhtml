@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+  <p:column/><p:column/>
+    <p:outputLabel value="#{msg['account.department']}" for="department" />
+    <p:inputText id="department" value="#{pageBean.accountToEdit.department}" title="#{msg['account.department']}"  >
+    </p:inputText>
+    <p:messages for="department" />
+    <p:column/><p:column/>
+    <br/>
+    <p:commandButton action="#{pageBean.addEmployees()}" value="#{msg['account.addEmployees']}" />
+
+</ui:composition>

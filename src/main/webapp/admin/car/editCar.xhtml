@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{editCarPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2">
+                <p:outputLabel for="registrationNumber" value="#{msg['car.registrationNumber']}" />
+                <p:inputText id="registrationNumber" value="#{pageBean.carToEdit.registrationNumber}" required="true"/>
+                <p:outputLabel for="numberOfSeats" value="#{msg['car.numberOfSeats']}" />
+                <p:inputText id="numberOfSeats" value="#{pageBean.carToEdit.numberOfSeats}" required="true"/>
+                <p:outputLabel for="location" value="#{msg['location']}" />
+                <p:selectOneMenu id="location" value="#{pageBean.locationName}" style="width:125px" required="true">
+                    <f:selectItem itemLabel="#{pageBean.carToEdit.locationId.shortName.toString()}" itemValue="" />
+                    <f:selectItems value="#{pageBean.allLocations}" var="item" itemLabel="#{item.shortName}" itemValue="#{item.shortName}"/>
+
+                </p:selectOneMenu>
+                <p:outputLabel value="#{msg['car.add.image']}"  />
+                <p:fileUpload fileUploadListener="#{pageBean.imageUpload}"  auto="true"
+                              sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                <p:outputLabel for="description" value="#{msg['description']}" />
+                <p:inputTextarea id="description" value="#{pageBean.carToEdit.description}" />
+
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <p:commandButton  value="#{msg['action.save']}" action="#{pageBean.editCar()}"/>
+                <p:commandButton  value="#{msg['action.delete']}" action="#{pageBean.deleteCar()}"/>
+                <p:commandButton  value="#{msg['action.cancel']}" action="#{pageBean.cancel()}"/>
+                <p:commandButton  value="#{msg['car.add.driver']}" action="#{pageBean.addDriver()}"/>
+
+            </h:panelGrid>
+            
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>
+

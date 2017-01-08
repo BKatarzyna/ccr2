@@ -1,0 +1,60 @@
+.title-panel {
+    background-color: graytext;
+    /*background-image: url("#{resource['bgblack18.jpg']}");*/
+    height: 80px;
+    width: 100%;
+    border: crimson;
+    border-style: ridge;
+    border-width: thick;
+}
+
+.title-panel-text {
+    color: white;
+    font-family: 'Georgia','Times New Roman','times',serif;
+    font-size: 24px;
+    font-weight: bold;   
+}
+
+.title-panel-subtext {
+    color: white;
+    font-family: 'Georgia','Times New Roman','times',serif;
+    font-size: 14px;
+    font-style: italic;
+}
+.left_menu{
+    float:left;
+    position:relative;
+    width:20%;
+    padding:10px;
+    border-style:solid;
+    border-width:0px;
+}
+.right_content{
+    float:right;
+    position:relative;
+    width:80%;
+    padding:10px;
+    border-style:solid;
+    border-width:0px;
+}
+/*
+.table_header {
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: underline;
+}*/
+
+
+#left {
+    float: left;
+    padding: 5px;
+    width: 150px;
+    min-height: 480px;
+}
+/*.right_content {
+    float:right;
+    padding: 5px;
+    min-height: 480px;
+    border:1px solid red;
+}*/

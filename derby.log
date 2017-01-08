@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Oct 17 11:11:13 CEST 2016:
+ Uruchamianie wersji The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446) systemu Derby: instancja a816c00e-0157-d1e8-bb3c-000009596b18
+w katalogu bazy danych C:\Users\Lenovo\Documents\NetBeansProjects\ccr2\target\databases\derby sun.misc.Launcher$AppClassLoader@75b84c92 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_66-b18
+user.dir=C:\Users\Lenovo\Documents\NetBeansProjects\ccr2
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Uruchomiono program ³aduj¹cy klasê bazy danych - derby.database.classpath=''

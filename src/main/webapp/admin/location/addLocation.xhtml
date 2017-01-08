@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{addLocationPageBean}" />
+
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="addLocationForm">
+            <h:panelGrid id="grid" columns="3">
+
+                <p:outputLabel value="#{msg['location.shortName']}" for="shortName" />
+                <p:inputText id="shortName" value="#{pageBean.newLocation.shortName}" title="#{msg['location.shortName']}" required="true"  />
+                <p:messages for="shortName" />
+                <p:outputLabel value="#{msg['location.city']}" for="city" />
+                <p:inputText id="city" value="#{pageBean.newLocation.city}" title="#{msg['location.city']}" required="true"  />
+                <p:messages for="city" />
+                <p:outputLabel value="#{msg['location.street']}" for="street" />
+                <p:inputText id="street" value="#{pageBean.newLocation.street}" title="#{msg['location.street']}" required="true"  />
+                <p:messages for="street" />
+                <p:outputLabel value="#{msg['location.number']}" for="number" />
+                <p:inputText id="number" value="#{pageBean.newLocation.number}" title="#{msg['location.number']}"  />
+                <p:messages for="number" />
+                
+                
+                <p:outputLabel value="#{msg['description']}" for="description" />
+                <p:inputTextarea id="description" value="#{pageBean.newLocation.description}" title="#{msg['account.name']}" style="width: 300px" rows="8" />
+                <p:messages for="description" />
+
+            </h:panelGrid>
+            <br />
+
+            <p:commandButton action="#{pageBean.createLocation()}" value="#{msg['action.create']}" update="grid"/>
+            <br />
+            <p:commandButton value="#{msg['action.cancel']}" onclick="window.history.back();"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,49 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{createFormPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="../templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+
+        <h:form id="formList">
+            <h:messages for="formList"/>     
+
+            <h:panelGrid columns="2">
+                <ui:include src="_templateViewData.xhtml" />
+                <p:outputLabel for="from" value="#{msg['accessibility.from']}"/>
+                <p:inputText id="from" value="#{pageBean.newAccessibility.departureFrom}" required="true"/>
+                <p:outputLabel for="destination" value="#{msg['accessibility.destination']}"/>
+                <p:inputText id="destination" value="#{pageBean.newAccessibility.destination}" required="true"/>
+
+                <p:outputLabel for="departureDate" value="#{msg['accessibility.departureDate']}"/>
+                <p:calendar id="departureDate" value="#{pageBean.newAccessibility.departureDate}" pattern="dd/MM/yyyy " mindate="#{pageBean.now}" maxdate="#{pageBean.later}"  required="true" >
+                    <p:ajax event="dateSelect" update="returnDate" listener="#{createFormPageBean.onDateSelect}" />
+                </p:calendar>
+                <p:outputLabel for="departureTime" value="#{msg['accessibility.departureTime']}" />
+                <p:calendar id="departureTime" value="#{pageBean.newAccessibility.departureTime}" pattern="HH:mm" timeOnly="true" required="true"/>
+                <p:outputLabel for="returnDate" value="#{msg['accessibility.returnDate']}"/>
+                <p:calendar id="returnDate" value="#{pageBean.newAccessibility.returnDate}" pattern="dd/MM/yyyy" mindate="#{pageBean.date}" required="true"/>
+                <p:outputLabel for="returnTime" value="#{msg['accessibility.returnTime']}"/>
+                <p:calendar id="returnTime" value="#{pageBean.newAccessibility.returnTime}" pattern="HH:mm" timeOnly="true" required="true"/>
+                <p:outputLabel for="matchEmail" value="#{msg['form.numberOfPeople']}"/>
+                <p:inputText id="matchEmail" value="#{pageBean.newForm.numberOfPeople}" required="true"  />
+            </h:panelGrid>
+            <br/>
+            <p:commandButton value="Zapamiętaj" action="#{pageBean.createNewForm()}"/>
+            <p:commandButton value="#{msg['action.cancel']}" onclick="window.history.back();"/>
+            <p:commandButton value="Wyślij" action="#{pageBean.sendForm()}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

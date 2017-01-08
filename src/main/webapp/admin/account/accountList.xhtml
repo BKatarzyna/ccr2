@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{accountListPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="../../templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="../../templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="accountListForm">       
+            <p:outputLabel value="Lista kont"/><br/>
+            <p:dataTable id="findAccount" var="row" widgetVar="filterAccounts" value="#{pageBean.accounts}"  rowKey="#{row.id}"
+                         emptyMessage="#{msg['list.empty']}" filteredValue="#{pageBean.filteredAccounts}"
+                         selectionMode="single" selection="#{pageBean.accountToEdit}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,50">
+                <f:facet name="header">
+                    <p:outputPanel>                
+                        <h:outputText value="Wyszukaj:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('filterAccounts').filter()" style="width:200px" placeholder="Czego szukasz?"/>
+
+                    </p:outputPanel><br/>
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{pageBean.onRowSelect}"  />
+                <p:column filterBy="#{row.login}" headerText="#{msg['account.login']}" filterStyle="display:none">
+                    <h:outputText value="#{row.login}" />
+                </p:column>
+                <p:column filterBy="#{row.name}" headerText="#{msg['account.name']}" filterStyle="display:none">
+                    <h:outputText value="#{row.name}" />                
+                </p:column>
+                <p:column filterBy="#{row.surname}" headerText="#{msg['account.surname']}" filterStyle="display:none">
+                    <h:outputText value="#{row.surname}" />                
+                </p:column>
+                <p:column filterBy="#{row.email}" headerText="#{msg['account.email']}" filterStyle="display:none">
+                    <h:outputText value="#{row.email}" />                
+                </p:column>
+                <p:column filterBy="#{row.type}" headerText="#{msg['account.type']}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('filterAccounts').filter()" >
+                            <f:selectItem itemLabel="Wybierz" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{pageBean.getAccountType()}" var="type" itemValue="#{type}" itemLabel="#{msg['account.type.' += type]}"/>
+
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{msg['account.type.' += row.type]}" />                
+                </p:column>    
+                <p:column filterBy="#{row.active}" headerText="#{msg['account.state']}" filterStyle="display:none">
+                    <h:outputText rendered="#{row.active==true}" value="#{msg['account.active']}" />   
+                    <h:outputText rendered="#{row.active==false}" value="#{msg['account.notActive']}" />   
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

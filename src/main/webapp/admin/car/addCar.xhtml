@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{addCarPageBean}" />
+
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="addCarForm" enctype="multipart/form-data">
+            <h:panelGrid id="grid" columns="3">
+
+                <p:outputLabel value="#{msg['car.registrationNumber']}" for="registrationNumber" />
+                <p:inputText id="registrationNumber" value="#{pageBean.newCar.registrationNumber}" title="#{msg['car.registrationNumber']}" required="true" />
+                <p:messages for="registrationNumber" />
+                <p:outputLabel value="#{msg['car.model']}" for="model" />
+                <p:inputText id="model" value="#{pageBean.newCar.model}" title="#{msg['car.model']}" />
+                <p:messages for="model" />
+                <p:outputLabel value="#{msg['car.numberOfSeats']}" for="numberOfSeats" />
+                <p:inputText id="numberOfSeats" value="#{pageBean.newCar.numberOfSeats}" title="#{msg['car.numberOfSeats']}" required="true" />
+                <p:messages for="numberOfSeats" />
+                <p:outputLabel for="location" value="#{msg['location']}" />
+                <p:selectOneMenu id="location" value="#{pageBean.locationName}" style="width:125px" required="true">
+                    <f:selectItem itemLabel="#{msg['action.choose']}" itemValue="" />
+                    <f:selectItems value="#{pageBean.allLocations}" var="item" itemLabel="#{item.shortName}" itemValue="#{item.shortName}"/>
+                </p:selectOneMenu>
+                <p:messages for="location" />
+
+
+                <p:outputLabel value="#{msg['car.add.image']}"  />
+                <p:fileUpload fileUploadListener="#{pageBean.imageUpload}"  auto="true"
+                              sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                <!--<p:column/><p:column/>-->
+
+                <p:outputLabel value="#{msg['description']}" for="name" />
+                <p:inputTextarea id="name" value="#{pageBean.newCar.description}" title="#{msg['description']}"  style="width:300px" rows="8"/>
+                <p:messages for="name" />
+
+            </h:panelGrid>
+            <br />
+            
+            <p:commandButton action="#{pageBean.createCar()}" value="#{msg['action.create']}" />
+            <br />
+            <p:commandButton value="#{msg['action.cancel']}" onclick="window.history.back();"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{editFormPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="../templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2">
+                <p:outputLabel value="#{msg['account.name']}" for="name" />
+                <p:outputLabel id="name" value="#{pageBean.formToEdit.employeeCreatedId.name}" title="#{msg['account.name']}" />
+                <p:outputLabel value="#{msg['account.surname']}" for="surname" />
+                <p:outputLabel id="surname" value="#{pageBean.formToEdit.employeeCreatedId.surname}" title="#{msg['account.surname']}" />
+                <p:outputLabel value="#{msg['account.email']}" for="email" />
+                <p:outputLabel id="email" value="#{pageBean.formToEdit.employeeCreatedId.email}" title="#{msg['account.email']}" />
+                <p:outputLabel for="from" value="#{msg['accessibility.from']}"/>
+                
+                <p:inputText id="from" value="#{pageBean.formToEdit.accessibilityId.departureFrom}" 
+                             disabled="#{pageBean.checkIfDisabled()}"/>
+                <p:outputLabel for="destination" value="#{msg['accessibility.destination']}"/>
+                <p:inputText id="destination" value="#{pageBean.formToEdit.accessibilityId.destination}" 
+                             disabled="#{pageBean.checkIfDisabled()}" />
+
+                <p:outputLabel for="departureDate" value="#{msg['accessibility.departureDate']}"/>
+                <p:calendar id="departureDate" value="#{pageBean.formToEdit.accessibilityId.departureDate}" pattern="dd/MM/yyyy" 
+                            disabled="#{pageBean.checkIfDisabled()}"/>
+                <p:outputLabel for="departureTime" value="#{msg['accessibility.departureTime']}"/>
+                <p:calendar id="departureTime" value="#{pageBean.formToEdit.accessibilityId.departureTime}" pattern="HH:mm" timeOnly="true"
+                            disabled="#{pageBean.checkIfDisabled()}"/>
+                <p:outputLabel for="returnDate" value="#{msg['accessibility.returnDate']}"/>
+                <p:calendar id="returnDate" value="#{pageBean.formToEdit.accessibilityId.returnDate}"  pattern="dd/MM/yyyy"
+                            disabled="#{pageBean.checkIfDisabled()}"/>
+                <p:outputLabel for="returnTime" value="#{msg['accessibility.returnTime']}"/>
+                <p:calendar id="returnTime" value="#{pageBean.formToEdit.accessibilityId.returnTime}" pattern="HH:mm" timeOnly="true"
+                            disabled="#{pageBean.checkIfDisabled()}"/>
+                <p:outputLabel for="matchEmail" value="#{msg['form.numberOfPeople']}"/>
+                <p:inputText id="matchEmail" value="#{pageBean.formToEdit.numberOfPeople}" 
+                             disabled="#{pageBean.checkIfDisabled()}" />
+                <p:outputLabel for="comment" value="#{msg['form.comments']}"/>
+                <p:inputTextarea id="comment" value="#{pageBean.formToEdit.comments}" style="width:300px" rows="8"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <h:form>
+                    <p:commandButton  value="#{msg['action.send']}" action="#{pageBean.commentForm()}"/>
+                    <p:commandButton  value="#{msg['action.accept']}" action="#{pageBean.acceptForm()}"/>
+                    <p:commandButton  value="#{msg['action.cancel']}" onclick="window.history.back();"/>
+                </h:form>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

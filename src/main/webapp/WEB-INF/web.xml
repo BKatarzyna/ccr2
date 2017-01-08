@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resourceBundle.path</param-name>
+        <param-value>i18n.messages</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>flick</param-value>
+    </context-param>
+    <!--możliwość wybotu skórki-->
+    <!--    <context-param>
+          <param-name>primefaces.THEME</param-name>
+          <param-value>#{loggedInUser.preferences.theme}</param-value>
+    </context-param>-->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <session-config>
+        <session-timeout>
+            15
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>ccrJDBCRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login/login.xhtml</form-login-page>
+            <form-error-page>/login/loginError.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-constraint>
+        <display-name>AdministratorConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Administrator web sites</web-resource-name>
+            <description/>
+            <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/manager/*</url-pattern>
+            <url-pattern>/common/*</url-pattern>
+            <url-pattern>/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ManagerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Manager web sites</web-resource-name>
+            <description/>
+            <url-pattern>/form/acceptForm.xhtml</url-pattern>
+            <url-pattern>/form/showFormManager.xhtml</url-pattern>
+            <url-pattern>/index.xhtml</url-pattern>
+            <url-pattern>/common/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Manager</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>EmployeeConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Employee web sites</web-resource-name>
+            <description/>
+            <url-pattern>/form/*</url-pattern>
+            <url-pattern>/common/*</url-pattern>
+            <!--<url-pattern>/error/*</url-pattern>-->
+            <url-pattern>/admin/car/bookCar.xhtml</url-pattern>
+            <url-pattern>/admin/car/bookSeat.xhtml</url-pattern>
+            <url-pattern>/admin/car/selectCar.xhtml</url-pattern>
+            <url-pattern>/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Employee</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>DriverConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>Driver web sites</web-resource-name>
+            <description/>
+            <url-pattern>/form/showFormDriverSetRealized.xhtml</url-pattern>
+            <url-pattern>/form/showFormDriverAll.xhtml</url-pattern>
+            <url-pattern>/common/*</url-pattern>
+            <url-pattern>/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Driver</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-role>
+        <description/>
+        <role-name>Administrator</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Manager</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Employee</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Driver</role-name>
+    </security-role>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/error403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/error404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <!--obsługa błędów systemowych zgłaszanych przez kontener-->
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error/error.xhtml</location>
+    </error-page>
+</web-app>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:column/> <p:column/> 
+    <p:outputLabel value="#{msg['account.position']}" for="position" />
+    <p:inputText id="position" value="#{pageBean.accountToEdit.position}" title="#{msg['account.position']}" />
+    <p:messages for="position" />
+
+    <p:outputLabel value="#{msg['account.manager']}" />
+    <p:selectOneMenu id="manager" value="#{pageBean.managerId}" style="width:125px" required="true" >
+        <f:selectItem itemLabel="#{pageBean.accountToEdit.manager == null ? msg['action.choose'] : (pageBean.accountToEdit.manager.name += ' ' +=  pageBean.accountToEdit.manager.surname)}" 
+                      itemValue="" />
+        <f:selectItems value="#{pageBean.allManagers}" var="item" itemLabel="#{item.name += ' ' += item.surname}" itemValue="#{item.id}"/>
+
+    </p:selectOneMenu>
+    <p:messages for="manager" />
+
+</ui:composition>

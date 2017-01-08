@@ -1,0 +1,69 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{showFormEmployeePageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="../templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+
+        <h:form id="formsListForm">    
+            <h:outputText value="Twoje rezerwacje"/><br/> 
+            <p:dataTable id="yourForms" var="form" widgetVar="fillForms" value="#{pageBean.allForms}"  rowKey="#{form.id}"
+                         emptyMessage="#{msg['list.empty']}" filteredValue="#{pageBean.filteredForms}"
+                         selectionMode="single" selection="#{pageBean.formToEdit}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,50">
+                <f:facet name="header">
+                    <p:outputPanel>                
+                        <h:outputText value="Wyszukaj:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('fillForms').filter()" style="width:200px" placeholder="Czego szukasz?"/>
+
+                    </p:outputPanel><br/>
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{pageBean.onRowSelect}"  />
+
+                <p:column filterBy="#{form.accessibilityId.departureFrom}" headerText="#{msg['accessibility.from']}" filterStyle="display:none">
+                    <h:outputText value="#{form.accessibilityId.departureFrom}" />
+                </p:column>
+                <p:column filterBy="#{form.accessibilityId.destination}" headerText="#{msg['accessibility.destination']}" filterStyle="display:none">
+                    <h:outputText value="#{form.accessibilityId.destination}" />
+                </p:column>
+                <p:column filterBy="#{form.accessibilityId.departureDate}" headerText="#{msg['accessibility.departureDate']}" filterStyle="display:none">
+                    <p:outputLabel value="#{form.accessibilityId.departureDate}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </p:outputLabel>
+                </p:column>
+                <p:column filterBy="#{form.accessibilityId.returnDate}" headerText="#{msg['accessibility.returnDate']}" filterStyle="display:none">
+                    <p:outputLabel value="#{form.accessibilityId.returnDate }" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </p:outputLabel>
+                </p:column>
+                <p:column filterBy="#{form.status}" headerText="Status" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('fillForms').filter()" >
+                            <f:selectItem itemLabel="Wybierz" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{pageBean.getStatusValues()}" var="statusValue" itemValue="#{statusValue}" itemLabel="#{msg['enum.Status.' += statusValue]}"/>
+
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{msg['enum.Status.' += form.status]}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

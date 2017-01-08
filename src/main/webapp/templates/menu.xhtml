@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="menu">
+        <p:menu>       
+            <p:menuitem value='${msg["main.page"]}' outcome="/index.xhtml" />
+            <p:menuitem value='${msg["menu.accounts"]}' outcome="/admin/account/accountList.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Administrator')}"/>
+            <p:submenu label='#{msg["menu.account.create"]}' rendered="#{facesContext.externalContext.isUserInRole('Administrator')}">
+                <p:menuitem value='#{msg["account.type.ADMINISTRATOR"]}' outcome="/admin/account/createAdministratorAccount.xhtml" />
+                <p:menuitem value='#{msg["account.type.MANAGER"]}' outcome="/admin/account/createManagerAccount.xhtml" />
+                <p:menuitem value='#{msg["account.type.EMPLOYEE"]}' outcome="/admin/account/createEmployeeAccount.xhtml" />
+                <p:menuitem value='#{msg["account.type.DRIVER"]}' outcome="/admin/account/createDriverAccount.xhtml" />
+            </p:submenu>
+            <p:menuitem value='#{msg["form.create"]}' outcome="/form/createForm.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Employee')}"/>
+            <p:menuitem value='#{msg["form.review"]}' outcome="/form/showFormEmployee.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Employee')}"/>
+            <p:menuitem value='#{msg["form.review"]}' outcome="/form/showFormManager.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Manager')}"/>
+            <p:menuitem value='#{msg["form.review.realized"]}' outcome="/form/showFormDriverSetRealized.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Driver')}"/>
+            <p:menuitem value='#{msg["form.review"]}' outcome="/form/showFormDriverAll.xhtml" rendered="#{facesContext.externalContext.isUserInRole('Driver')}"/>
+            <p:submenu label='#{msg["location"]}' rendered="#{facesContext.externalContext.isUserInRole('Administrator')}">
+                <p:menuitem value='#{msg["location.create"]}' outcome="/admin/location/addLocation.xhtml" />
+                <p:menuitem value='#{msg["location.list"]}' outcome="/admin/location/locationList.xhtml" />
+            </p:submenu>
+            <p:submenu label='#{msg["car"]}' rendered="#{facesContext.externalContext.isUserInRole('Administrator')}">
+                <p:menuitem value='#{msg["car.create"]}' outcome="/admin/car/addCar.xhtml" />
+                <p:menuitem value="#{msg['car.list']}" outcome="/admin/car/carList.xhtml" />
+
+            </p:submenu>
+        </p:menu>
+
+    </h:form>
+</ui:composition>

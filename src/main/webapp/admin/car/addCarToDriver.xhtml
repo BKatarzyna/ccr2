@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{addCarToDriverPageBean}" />
+
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="addCar" >
+            <p:dataTable var="car" value="#{pageBean.locationCars}" rows="5" paginator="true" 
+                         selection="#{pageBean.driverCars}" 
+                         rowKey="#{car.id}" >
+                <p:column selectionMode="multiple" style="width:2%" />
+                <p:column headerText="#{msg['car.registrationNumber']}">
+                    <h:outputText value="#{car.registrationNumber}" />
+                </p:column>
+                <p:column headerText="#{msg['car.model']}">
+                    <h:outputText value="#{car.model}" />
+                </p:column>
+                <p:column headerText="#{msg['car.numberOfSeats']}">
+                    <h:outputText value="#{car.numberOfSeats}" />
+                </p:column>
+                <p:column headerText="#{msg['location']}">
+                    <h:outputText value="#{car.locationId.shortName}" />
+                </p:column>
+            </p:dataTable>
+            <h:panelGrid id="grid" columns="2">
+                <p:commandButton action="#{pageBean.addCars()}" value="#{msg['driver.add.car']}" />
+                <br />
+                <p:commandButton value="#{msg['action.cancel']}" onclick="window.history.back();" />
+            </h:panelGrid>
+            </h:form>
+    </ui:define>
+
+</ui:composition>

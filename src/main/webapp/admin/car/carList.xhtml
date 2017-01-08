@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{carListPageBean}" />
+    <ui:define name="topPanel">
+        <ui:include src="/templates/topPanel.xhtml" />
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="carListForm">       
+            <p:outputLabel value="#{msg['car.list']}"/><br/>
+            <p:dataTable id="findCar" var="row" widgetVar="filterCars" value="#{pageBean.allCars}"  rowKey="#{row.id}"
+                         emptyMessage="#{msg['list.empty']}" filteredValue="#{pageBean.filteredCars}"
+                         selectionMode="single" selection="#{pageBean.car}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,20,50">
+                <f:facet name="header">
+                    <p:outputPanel>                
+                        <h:outputText value="Wyszukaj:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('filterCars').filter()" style="width:200px" placeholder="Czego szukasz?"/>
+
+                    </p:outputPanel><br/>
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{pageBean.onRowSelect}"/> 
+                <p:column filterBy="#{row.registrationNumber}" headerText="#{msg['car.registrationNumber']}" filterStyle="display:none">
+                    <h:outputText value="#{row.registrationNumber}" />
+                </p:column>
+                <p:column filterBy="#{row.numberOfSeats}" headerText="#{msg['car.numberOfSeats']}" filterStyle="display:none">
+                    <h:outputText value="#{row.numberOfSeats}" />
+                </p:column>
+                <p:column filterBy="#{row.locationId.shortName}" headerText="#{msg['location']}" filterStyle="display:none">
+                    <h:outputText value="#{row.locationId.shortName}" />
+                </p:column>
+                <p:column filterBy="#{row.description}" headerText="#{msg['description']}" filterStyle="display:none">
+                    <h:outputText value="#{row.description}" />
+                </p:column>
+                
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
